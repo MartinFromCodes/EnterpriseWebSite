@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+<h2>JQuery语法Dome</h2>
+<br />
+<input type="button" id="btnTest" value="按钮"/>
+<input type="text" id="textResult"   />
+<br />
+<input type="button" value="对话框" id="btnTest1" />
+
+<input type="button" value="Ajax" id="btnAjaxTest" />
+
+<div id="dialog" title="Basic dialog" hidden="hidden">
+  <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+</div>
+<div id="divList">
+    <a href="#">测试链接1</a>
+    <a href="#">测试链接2</a>
+    <a href="#">测试链接3</a>
+</div>
+<br />
+<div id="divlist2" style="background-color:red" >
+    asdfasdfasdfasdf
+</div>
+<hr />
+<script type="text/javascript">
+ 
+    $(document).ready()
+    {
+
+        $("#btnAjaxTest").click(
+            function () {
+                $.ajax({
+                    url: "/JQuery/AJAXTest/1",
+                    type: "GET",
+                    dataType: "JSON",
+                    success: function (json) {
+                        alert(json.Title);
+                    },
+                    error: function (data) { alert(data); }
+                }
+                    );
+            }
+        );
+
+        //alert("Hello Jquery!");
+
+        $("#btnTest").click(
+            function () {
+                //$("#divWeblist").html("<div>MVC实战开发系列课程！非常牛B！</div>");
+                //$("#txtResult").val("MVC实战开发系列课程！非常牛B！");
+                //隐藏
+                $("#divWeblist").hide("slow", function () { alert('我隐藏啦'); });
+            }
+            );
+        //淡入
+        $("#fadeInTest").bind("click", null, function () {
+            $("#fadeInDiv").fadeIn("slow", function () {
+
+            });
+        });
+        //淡出
+        $("#fadeOutTest").bind("click", null, function () {
+            $("#fadeInDiv").fadeOut("slow", function () {
+
+            });
+        });
+        //淡出
+        $("#toggleTest").bind("click", null, function () {
+            $("#fadeInDiv").toggle("slow", function () {
+
+            });
+        });
+        //对话框
+
+        $("#dialogTest").click(function () {
+
+            $("#fadeInDiv").dialog();
+        });
+    }
+
+
+ 
+    //$().ready(
+    //   $("#btnTest").click(function () {
+            
+    //       //  $("#divList").html("<div>测试评论信息！</div>")
+    //       //$("#textResult").val("click");
+    //       //alert($("#textResult").text())
+    //      // alert($("#divlist2").css('display'))
+
+            
+    //   })
+
+ 
+   //  );
+
+    $("#textResult").click(function () {
+
+        if ($("#divlist2").is(":hidden")) {
+
+            $("#divlist2").show()
+        }
+        else {
+            $("#divlist2").hide('slow', function () {
+                alert('hide')
+            })
+        }
+
+    })
+    
+    $("#btnTest1").click(function () {
+        var dialogOpts = {
+            buttons: { "OK": function () { alert('ok'); }, "Cancel": function () { $(this).dialog("close"); } }
+        }
+        $("#dialog").dialog(dialogOpts);
+    })
+     
+    
+</script>

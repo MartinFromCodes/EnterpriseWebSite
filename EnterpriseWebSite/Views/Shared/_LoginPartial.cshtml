@@ -1,0 +1,36 @@
+﻿@*@if (Request.IsAuthenticated) {
+    <text>
+        你好，@Html.ActionLink(User.Identity.Name, "Manage", "Account", routeValues: null, htmlAttributes: new { @class = "username", title = "管理" })!
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" })) {
+            @Html.AntiForgeryToken()
+            <a href="javascript:document.getElementById('logoutForm').submit()">注销</a>
+        }
+    </text>
+} else {
+    <ul>
+        <li>@Html.ActionLink("注册", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("登录", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+  @Html.ActionLink("登录", "Login", "Account");
+    @Html.ActionLink("注册", "Register", "Account");
+
+}*@
+
+@if (Session["UserName"] != null)
+{
+    <text>
+    你好,@Html.ActionLink(Session["UserName"].ToString(), "Manage", "Account")
+    <span></span>
+    @Html.ActionLink("注销", "LogOff", "Account")
+
+    </text>
+}
+else
+{
+       <a href="/Account/Login"><img src="/Images/login.png" width="16" height="11" alt="Login" />Login</a>  
+        <a href="/Account/Register"><img src="/Images/login.png" width="16" height="11" alt="Login" >Register</a>
+    
+        <a href="javascript:if(confirm('只有企业版才有多语言功能，请点击确定访问netgather.com咨询。')){location.href='http://www.netgather.com'}"><img src="/Images/gb.gif" width="16" height="11" alt="English" />English</a>
+    
+  
+}

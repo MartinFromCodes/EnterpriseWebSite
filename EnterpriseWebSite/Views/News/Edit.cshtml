@@ -1,0 +1,137 @@
+﻿@model EnterpriseWebSite.Models.NewsModel
+
+@{
+    ViewBag.Title = "编辑新闻信息";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+<script src="~/js/jquery-1.9.1.js"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+
+
+<h2>编辑新闻信息</h2>
+
+@using (Html.BeginForm("Edit", "News"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <table  border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse;">
+
+        <tr>
+            <td></td>
+            <td>新闻信息</td>
+        </tr>
+        <tr>
+            <td>标题 @Html.ValidationMessageFor(model => model.Title)</td>
+            <td>@Html.TextBoxFor(model => model.Title, new { style = "500px" })</td>
+        </tr>
+        <tr>
+            <td>内容  @Html.ValidationMessageFor(model=>model.Message)</td>
+            <td> @Html.Raw(ViewBag.Editor)</td>
+        </tr>
+        
+        <tr>
+            <td>发布</td>
+            <td>@Html.CheckBoxFor(model=>model.IsPublic)
+                @Html.LabelFor(model=>model.IsPublic)
+            </td>
+
+        </tr>
+
+        <tr>
+            <td></td>
+            <td>
+                <input class="btn btn-defalut btn-lg btn-block" type="submit" value="保存新闻" />
+            </td>
+
+        </tr>
+
+    </table>
+    
+   <br />
+}
+
+<div>
+    @Html.ActionLink("返回新闻列表", "Index", "News")
+</div>
+
+
+@*@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend> </legend>
+ 
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Message)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Message)
+            @Html.ValidationMessageFor(model => model.Message)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsTop)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsTop)
+            @Html.ValidationMessageFor(model => model.IsTop)
+        </div>
+ 
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsPublic)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsPublic)
+            @Html.ValidationMessageFor(model => model.IsPublic)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreateDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreateDate)
+            @Html.ValidationMessageFor(model => model.CreateDate)
+        </div>
+ 
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsDelete)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsDelete)
+            @Html.ValidationMessageFor(model => model.IsDelete)
+        </div>
+
+        <p>
+            <input type="submit" value="保存新闻" />
+        </p>
+    </fieldset>
+    
+ 
+    
+}
+
+<div>
+      @Html.ActionLink("返回新闻列表", "Index","News")
+</div>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

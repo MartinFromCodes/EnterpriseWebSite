@@ -1,0 +1,85 @@
+﻿@model EnterpriseWebSite.Models.LoginModel
+
+@{
+    ViewBag.Title = "登录";
+}
+ 
+<script type="text/javascript">
+    function changeCheckCode() {
+        $("#VerifyImage").attr("src", $("#VerifyImage").attr("src") + 1);
+    }
+
+    function atferLogin(data){
+        var serverData = data.split(':');
+        if (serverData[0]=="ok") {
+            window.location.href = "/Home/Index";
+        }
+        else if (serverData[0]=="no") {
+            $("#errorMsg").text(serverData[0]);
+            changeCheckCode();
+        }
+        else {
+            $("#errorMsg").text("系统繁忙!");
+        }
+    }
+</script>
+<hgroup class="title">
+    <h1>@ViewBag.Title.</h1>
+</hgroup>
+
+@*@using (Ajax.BeginForm("Account",new{},new AjaxOptions(){HttpMethod="post",OnSuccess="after"},new {id="loginForm"}))
+{
+    
+}*@
+
+
+<section id="loginForm">
+    <h2>使用本地帐户登录。</h2>
+    @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <fieldset>
+            <legend>“登录”表单</legend>
+            <ol>
+                <li>
+                    @Html.LabelFor(m => m.UserName)
+                    @Html.TextBoxFor(m => m.UserName)
+                    @Html.ValidationMessageFor(m => m.UserName)
+                </li>
+                <li>
+                    @Html.LabelFor(m => m.Password)
+                    @Html.PasswordFor(m => m.Password)
+                    @Html.ValidationMessageFor(m => m.Password)
+                </li>
+
+                <li>
+                    @Html.TextBox("verifycode", "", new { style = "width:80px;", placeholder = "验证码" })
+                    <img style="cursor: pointer; vertical-align:middle" src="@Url.Action("ShowValidateCode", "Common")" id="VerifyImage" title="看不清？点击换一个" onclick="javascript:document.getElementById('VerifyImage').src='@Url.Action("ShowValidateCode", "Common")?r='+Math.random();return false;">
+
+                </li>
+                <li>
+                    @Html.CheckBoxFor(m => m.RememberMe)
+                    @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+                </li>
+                <li>
+                  <span id="errorMsg"></span>
+                </li>
+            </ol>
+            <input type="submit" value="登录" />
+        </fieldset>
+        <p>
+            @Html.ActionLink("注册", "Register") 如果你没有帐户。
+        </p>
+    }
+</section>
+
+<section class="social" id="socialLoginForm">
+    <h2>使用其他服务登录。</h2>
+    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
+</section>
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@

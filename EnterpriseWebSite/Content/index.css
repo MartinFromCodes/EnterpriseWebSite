@@ -1,0 +1,77 @@
+﻿body {
+    color: rgb(0, 0, 0);
+    line-height: 144%;
+    font-size: 12px;
+}
+
+td {
+    color: rgb(0, 0, 0);
+    line-height: 144%;
+    font-size: 12px;
+}
+
+th {
+    color: rgb(0, 0, 0);
+    line-height: 144%;
+    font-size: 12px;
+}
+
+body {
+    background-color: rgb(255, 255, 255);
+}
+
+a:link {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+
+a:visited {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(255, 0, 0);
+    text-decoration: underline;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+.STYLE29 {
+    color: rgb(0, 0, 0);
+}
+
+.left1 {
+    color: rgb(196, 38, 0);
+    padding-top: 3px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.about1 {
+    color: rgb(51, 51, 51);
+    line-height: 25px;
+    font-size: 12px;
+}
+#newslist ul li {
+    height:30px;
+    list-style-type:decimal;
+}
+#newslist ul li a {
+    color: #0026ff;
+    outline: none;
+    padding-left: 3px;
+    padding-right: 3px;
+    text-decoration:underline;
+}
+
+    #newslist  ul li a:link, a:visited,
+    a:active, a:hover {
+        color: #0026ff;
+    }
+
+    #newslist  ul li a:hover {
+        background-color: #f00;
+    }

@@ -1,0 +1,54 @@
+﻿@model  List<EnterpriseWebSite.Models.NewsModel>  
+ 
+@{
+    ViewBag.Title = "新闻列表";
+     
+}
+<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+<h2>新闻列表</h2>
+
+<p>
+    @Html.ActionLink("添加新闻信息", "Create","News")
+</p>
+
+<table>
+    <tr>
+        <th></th>
+    </tr>
+
+@foreach (EnterpriseWebSite.Models.NewsModel item in  Model)
+{
+    <tr>
+        <td>
+             @Html.ActionLink(@item.Title, "Details", new { id=item.NewId }) |
+        </td>
+        <td>
+            @Html.ActionLink("编辑", "Edit", new { id=item.NewId }) |
+            @Html.ActionLink("详细", "Details", new { id=item.NewId}) |
+            @Html.ActionLink("删除", "Delete", new { id = item.NewId })|
+            <input type="button" id="btnDelete" value="删除" />
+        </td>
+    </tr>
+}
+
+</table>
+
+<div id="dialog" title="删除新闻" hidden="hidden">
+  <p>你是否确定要删除这条新闻?</p>
+</div>
+
+<script type="text/javascript">
+    $(document).ready()
+    {
+        $("#btnDelete").click(function () {
+            var dialogOpts = {
+                buttons: { "确定": function () { alert('ok'); }, "取消": function () { $(this).dialog("close"); } }
+            }
+            $("#dialog").dialog(dialogOpts);
+        })
+
+
+      
+        
+    }
+</script>

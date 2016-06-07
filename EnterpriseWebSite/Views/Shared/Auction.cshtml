@@ -1,0 +1,10 @@
+﻿@using EnterpriseWebSite.Models;
+@model Auction
+<div class="auction">
+    <a href="@Model.Url">
+        <img src="@Model.ImageUrl" />
+    </a>
+    <h4><a href="@Model.Url">@Model.Title</a></h4>
+    <p>Current Price:@Model.CurrentPrice</p>
+
+</div>
