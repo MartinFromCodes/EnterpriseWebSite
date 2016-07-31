@@ -14,6 +14,12 @@ namespace EnterpriseWebSite
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
                         "~/Scripts/jquery-ui-{version}.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/KinSlideshow").Include(
+                        "~/Scripts/jquery.KinSlideshow-1.2.1.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/ddsmoothmenu").Include(
+                        "~/Scripts/ddsmoothmenu.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",
                         "~/Scripts/jquery.validate*"));
@@ -26,8 +32,7 @@ namespace EnterpriseWebSite
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/reset.css",
 				"~/Content/accout.css",
-                "~/Content/ddsmoothmenu.css",
-                "~/Content/webmain.css"
+                "~/Content/ddsmoothmenu.css"
                 ));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(

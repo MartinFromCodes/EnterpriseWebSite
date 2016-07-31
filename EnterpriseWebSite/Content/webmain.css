@@ -1,6 +1,6 @@
 ﻿@charset "utf-8";
 /* CSS Document */
-body,button,input,select,textarea{color:#333;font:12px/1.5 Tahoma,Helvetica,Arial,\5b8b\4f53}
+body,button,input,select,textarea{color:#333;font:14px/1.5 Arial,Helvetica,\5b8b\4f53}
 a:link,a:visited,a:active{color:#000;text-decoration:none}
 a:hover{color:#008aff;text-decoration:none}
 /* Clear */
@@ -126,3 +126,8 @@ body{background:#f6f6f6 url(/Images/body_bg.gif) top repeat-x}
 .page-guestbook p input{height:26px;width:100px;color:#FFF;background:#025dbf;cursor:pointer;border:none}
 
 #copyright{background:url(/Images/copyright_bg.gif) repeat-x top;padding:15px 0px;text-align:center}
+
+.news-tab tr td{ font-size:16px; } 
+.news-tab tr td:nth-child(1){ width:780px;} 
+.news-tab tr td:nth-last-child(1){ text-align:right;} 
+.news-tab tr{height: 30px;  } 

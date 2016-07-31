@@ -10,7 +10,10 @@
 <input type="button" value="对话框" id="btnTest1" />
 
 <input type="button" value="Ajax" id="btnAjaxTest" />
+<br />
+<input type="button" value="fadeInTest" id="fadeInTest" />
 
+<input type="button" value="fadeOutTest" id="fadeOutTest" />
 <div id="dialog" title="Basic dialog" hidden="hidden">
   <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
 </div>
@@ -20,8 +23,11 @@
     <a href="#">测试链接3</a>
 </div>
 <br />
-<div id="divlist2" style="background-color:red" >
+<div id="divlist2" style="background-color:red;width:350px;" hidden="hidden">
     asdfasdfasdfasdf
+</div>
+<div id="fadeInDiv" style="background-color:blue;width:350px;height:50px" hidden="hidden">
+
 </div>
 <hr />
 <script type="text/javascript">
@@ -104,7 +110,7 @@
         }
         else {
             $("#divlist2").hide('slow', function () {
-                alert('hide')
+               // alert('hide')
             })
         }
 

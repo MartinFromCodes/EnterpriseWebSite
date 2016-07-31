@@ -75,3 +75,7 @@ a:active {
     #newslist  ul li a:hover {
         background-color: #f00;
     }
+
+.newlist {margin:10px 10px;
+}
+table.news-tab {margin-left: 15px;}

@@ -1,42 +1,38 @@
-﻿@model  List<EnterpriseWebSite.Models.NewsModel>  
- 
+﻿@model  List<EnterpriseWebSite.Models.NewsModel>
+
 @{
     ViewBag.Title = "新闻列表";
-     
+
 }
-<link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
-<h2>新闻列表</h2>
+<div id="index_main" class="newlist">
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+    <h3>新闻列表</h3>
+    <hr />
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;@Html.ActionLink("添加新闻信息", "Create", "News", new { style="font-size: 18px;color: red;" }) </p>
+    <table class="news-tab">
+        
 
-<p>
-    @Html.ActionLink("添加新闻信息", "Create","News")
-</p>
+        @foreach (EnterpriseWebSite.Models.NewsModel item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.ActionLink(@item.Title, "Details", new { id = item.NewId })  
+                </td>
+                <td>
+                    @Html.ActionLink("编辑", "Edit", new { id = item.NewId }) |
+                    @Html.ActionLink("详细", "Details", new { id = item.NewId }) |
+                    @Html.ActionLink("删除", "Delete", new { id = item.NewId })|
+                    <input type="button" id="btnDelete" value="删除" />
+                </td>
+            </tr>
+        }
 
-<table>
-    <tr>
-        <th></th>
-    </tr>
+    </table>
 
-@foreach (EnterpriseWebSite.Models.NewsModel item in  Model)
-{
-    <tr>
-        <td>
-             @Html.ActionLink(@item.Title, "Details", new { id=item.NewId }) |
-        </td>
-        <td>
-            @Html.ActionLink("编辑", "Edit", new { id=item.NewId }) |
-            @Html.ActionLink("详细", "Details", new { id=item.NewId}) |
-            @Html.ActionLink("删除", "Delete", new { id = item.NewId })|
-            <input type="button" id="btnDelete" value="删除" />
-        </td>
-    </tr>
-}
-
-</table>
-
-<div id="dialog" title="删除新闻" hidden="hidden">
-  <p>你是否确定要删除这条新闻?</p>
+    <div id="dialog" title="删除新闻" hidden="hidden">
+        <p>你是否确定要删除这条新闻?</p>
+    </div>
 </div>
-
 <script type="text/javascript">
     $(document).ready()
     {
@@ -48,7 +44,7 @@
         })
 
 
-      
-        
+
+
     }
 </script>

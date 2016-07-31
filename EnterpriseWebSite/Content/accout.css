@@ -1,9 +1,5 @@
 ﻿/* login page */
-#loginForm {
-    border-right: solid 102px #c8c8c8;
-    float: right;
-    width: 55%;
-}
+ 
 
     #loginForm .validation-error {
         display: block;
@@ -21,15 +17,17 @@
         margin: 0;
     }
 
-    #loginForm input {
-        width: 150px;
-    }
 
-    #loginForm input[type="checkbox"],
-    #loginForm input[type="submit"],
-    #loginForm input[type="button"],
+
+
+#loginForm input[type="submit"],
+#loginForm input[type="button"] {
+width:85px;
+height:25px;
+}
     #loginForm button {
-        width: auto;
+        width: 30px;
+        
     }
 
 #socialLoginForm {
@@ -52,9 +50,12 @@
 
    /* login page */
     #loginForm {
-        border-right: none;
-        float: none;
-        width: auto;
+       border-right: none;
+    float: left;
+    width:320px;
+    position: absolute;
+    left: 470px;
+     
     }
 
         #loginForm .validation-error {
@@ -69,38 +70,51 @@
     } 
 
  /* login */
-    #login {
-        font-size: .85em;
-        margin: 0 0 12px;
-        text-align: center;
+ #login {
+    display: block;
+    font-size: .85em;
+    margin: 0 0 10px;
+    text-align: right;
+}
+
+    #login a {
+        background-color: #d3dce0;
+        margin-left: 10px;
+        margin-right: 3px;
+        padding: 2px 3px;
+        text-decoration: none;
     }
 
-        #login ul {
-            margin: 5px 0;
-            padding: 0;
-        }
+    #login a.username {
+        background: none;
+        margin: 0;
+        padding: 0;
+        text-decoration: underline;
+    }
 
-        #login li {
-            display: inline;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
+    #login ul {
+        margin: 0;
+    }
 
-        #login a {
-            background: none;
-            color: #999;
-            font-weight: 600;
-            margin: 2px;
-            padding: 0;
-        }
+    #login li {
+        display: inline;
+        list-style: none;
+    }
 
-        #login a:hover {
-            color: #333;
-        }
- 
 
- 
+
+hgroup {
+margin:10px;
+}
+#loginForm h2 {margin:10px; }
+
+.logform {    position: relative;
+    width: 490px;
+    height: 300px;}
+#VerifyImage {
+    height:25px;
+    width:50px;
+}
 
     /* footer
     ----------------------------------------------------------*/
@@ -119,3 +133,32 @@
             margin: 0;
         }
  
+ /*---------*/
+        fieldset {
+    border: none;
+    margin: 10px;
+    padding: 0;
+}
+
+    fieldset legend {
+        display: none;
+    }
+
+    fieldset ol {
+        padding: 0;
+        list-style: none;
+    }
+
+        fieldset ol li {
+            padding-bottom: 5px;
+        }
+
+label {
+    display: block;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+label.checkbox {
+    display: inline;
+}
