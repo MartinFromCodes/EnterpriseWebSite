@@ -7,8 +7,8 @@
     <ProjectGuid>{657A0832-DF1F-476D-9450-00E573E059F8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mvc4Factory.Exceptions</RootNamespace>
-    <AssemblyName>Mvc4Factory.Exceptions</AssemblyName>
+    <RootNamespace>EnterpriseWebSite.Exceptions</RootNamespace>
+    <AssemblyName>EnterpriseWebSite.Exceptions</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
