@@ -7,7 +7,7 @@
 td {
     color: rgb(0, 0, 0);
     line-height: 144%;
-    font-size: 12px;
+    
 }
 
 th {
@@ -76,6 +76,29 @@ a:active {
         background-color: #f00;
     }
 
-.newlist {margin:10px 10px;
-}
+.newlist {margin:10px 10px;}
+.liheigit{height:350px;}
 table.news-tab {margin-left: 15px;}
+.pagination {
+    display: inline-block;
+    padding-left: 0;
+    margin: 20px 0;
+    border-radius: 4px;
+}
+.pagination>li {
+    display: inline;
+}
+ 
+.pagination>li>a, .pagination>li>span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.428571429;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+#newslist ul li a:link, a:visited, a:active, a:hover {
+    color: #0026ff;
+}

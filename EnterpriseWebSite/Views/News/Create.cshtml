@@ -1,68 +1,81 @@
 ﻿@model EnterpriseWebSite.Models.NewsModel
+ 
 
 @{
     ViewBag.Title = "发布新闻信息";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script src="~/Content/ueditor/ueditor.config.js"></script>
+<script src="~/Content/ueditor/ueditor.all.js"></script>
+<link href="~/Content/ueditor/themes/iframe.css" rel="stylesheet" />
+<script src="~/Content/ueditor/lang/zh-cn/zh-cn.js"></script>
+ @section Scripts {
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
-<script src="~/Scripts/jquery-1.8.2.js"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-
-
-
-<h2>发布新闻信息</h2>
-
-@using (Html.BeginForm("CreateNews","News"))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary()
-
-    <table  border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse;">
-
-        <tr>
-            <td></td>
-            <td>新闻信息</td>
-        </tr>
-        <tr>
-            <td>标题 @Html.ValidationMessageFor(model => model.Title)</td>
-            <td>@Html.TextBoxFor(model => model.Title, new { style = "500px" })</td>
-        </tr>
-        <tr>
-            <td>内容  @Html.ValidationMessageFor(model=>model.Message)</td>
-            <td> @Html.Raw(ViewBag.Editor)</td>
-        </tr>
-        
-        <tr>
-            <td>发布</td>
-            <td>@Html.CheckBoxFor(model=>model.IsPublic)
-                @Html.LabelFor(model=>model.IsPublic)
-            </td>
-
-        </tr>
-
-        <tr>
-            <td></td>
-            <td>
-                <input class="btn btn-defalut btn-lg btn-block" type="submit" value="保存" />
-            </td>
-
-        </tr>
-
-    </table>
-    
-   <br />
+    @Scripts.Render("~/bundles/jqueryval", "~/Content/ueditor/ueditor.config.js", "~/Content/ueditor/ueditor.all.js")
+    <script type="text/javascript">
+        var editorOption = {
+            initialFrameWidth: 823,
+            initialFrameHeight: 400
+        };
+        var editor = new baidu.editor.ui.Editor(editorOption);
+        editor.render('Content');
+        $('form').submit(function () {
+            $('#Content').val(editor.getContent());
+        });
+    </script>
 }
 
-<div>
-    @Html.ActionLink("返回新闻列表", "Index", "News")
+<div class="newlist">
+
+    <h2>发布新闻信息</h2>
+    @using (Html.BeginForm("CreateNews", "News", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary()
+
+        <table class="econtent">
+
+            <tr>
+                <td></td>
+                <td>新闻信息</td>
+            </tr>
+            <tr>
+                <td>标题： @Html.ValidationMessageFor(model => model.Title)</td>
+                <td>@Html.TextBoxFor(model => model.Title, new { style = "width:500px" })</td>
+            </tr>
+            <tr>
+                <td>内容： @Html.ValidationMessageFor(model => model.Message)</td>
+                <td>@Html.TextAreaFor(model => model.Message, new { @id = "Content" })
+              </td>
+               
+
+            </tr>
+
+            <tr>
+                <td>发布：</td>
+                <td>
+                  
+                    <input data-val="true"  id="IsPublic" name="IsPublic" type="checkbox"  >
+                    @Html.LabelFor(model => model.IsPublic, new { style = "display:inline" })
+                </td>
+
+            </tr>
+
+            <tr>
+                <td></td>
+                <td>
+                    <input class="btn-submit" type="submit" value="保存" />
+                </td>
+
+            </tr>
+
+        </table>
+
+        <br />
+    }
+
+    <div>
+        @Html.ActionLink("返回新闻列表", "Index", "News", new { style="color:red"})
+    </div>
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+ 

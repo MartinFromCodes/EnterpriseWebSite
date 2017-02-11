@@ -131,3 +131,7 @@ body{background:#f6f6f6 url(/Images/body_bg.gif) top repeat-x}
 .news-tab tr td:nth-child(1){ width:780px;} 
 .news-tab tr td:nth-last-child(1){ text-align:right;} 
 .news-tab tr{height: 30px;  } 
+
+.econtent{width:900px;font-size:16px;}
+.econtent  td{padding: 5px 5px;  }
+.btn-submit {    width: 75px;height: 27px;}

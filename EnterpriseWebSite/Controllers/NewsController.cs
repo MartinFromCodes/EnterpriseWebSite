@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using RTE;
 using EnterpriseWebSite.Models;
 using EnterpriseWebSite.BLL;
 using EnterpriseWebSite.Entities;
@@ -49,6 +48,7 @@ namespace EnterpriseWebSite.Controllers
 
 
         //新闻详细信息
+        [OutputCache(Duration=360)]
         public ActionResult Details(int id)
         {
             BLLNews bll = new BLLNews();
@@ -61,50 +61,7 @@ namespace EnterpriseWebSite.Controllers
         [Martin]
         public ActionResult Create()
         {
-            PrepairEditor("Message", delegate(Editor editor)
-            {
-                //set editor properties here
-            });
-
             return View();
-        }
-
-        //this is a  custom function that create and initialize the editor
-        protected Editor PrepairEditor(string propertyName, Action<Editor> oninit)
-        {
-            Editor editor = new Editor(System.Web.HttpContext.Current, propertyName);
-
-            editor.ClientFolder = "/richtexteditor/";
-
-            editor.AjaxPostbackUrl = Url.Action("EditorAjaxHandler");
-
-            if (oninit != null) oninit(editor);
-
-
-            //try to handle the upload/ajax requests
-            bool isajax = editor.MvcInit();
-
-            if (isajax)
-                return editor;
-
-            //load the form data if any
-            if (this.Request.HttpMethod == "POST")
-            {
-                string formdata = this.Request.Form[editor.Name].TrimEnd();
-                if (formdata != null)
-                {
-                    editor.LoadFormData(formdata);
-
-                }
-
-            }
-
-            
-
-            //render the editor to ViewBag.Editor 
-            ViewBag.Editor = editor.MvcGetString();
-
-            return editor;
         }
 
 
@@ -114,7 +71,7 @@ namespace EnterpriseWebSite.Controllers
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
         [Martin]
-        public ActionResult CreateNews(NewsModel news)
+        public ActionResult CreateNews(FormCollection fc)
         {
             int userId = -1;
             if (Session["UserID"] != null)
@@ -122,18 +79,18 @@ namespace EnterpriseWebSite.Controllers
                 userId = int.Parse(Convert.ToString(Session["UserID"]));
             }
 
-
+            NewsModel news = new NewsModel();
             BLLNews bll = new BLLNews();
             NewsInfo newsObject = new NewsInfo()
             {
-                Title = SecurityUtility.RemoveIllegalCharacters(news.Title),
-                Content = news.Message,
+                Title = fc["Title"].ToString(),
+                Content = fc["Message"].ToString(),
                 CreateDate = DateTime.Now,
                 IsDelete = false,
-                IsPublic = true,
+                IsPublic = Convert.ToBoolean(fc["IsPublic"]),
                 IsTop = false,
                 ViewTimes = 0,
-               
+
                 IsCommented = false,
                 UserId = userId
 
@@ -146,11 +103,7 @@ namespace EnterpriseWebSite.Controllers
             return RedirectToAction("Index");
         }
 
-        //[HttpPost]
-        //public ActionResult Create(FormCollection collection)
-        //{
-        //    return RedirectToAction("Index");
-        //}
+         
 
 
         [HttpGet]
@@ -159,24 +112,17 @@ namespace EnterpriseWebSite.Controllers
         {
             //根据id获取要编辑的新闻
             BLLNews bll = new BLLNews();
-            NewsInfo newsInfo = bll.GetData(id); 
+            NewsInfo newsInfo = bll.GetData(id);
 
 
             //根据实体对象，来构造模型
             NewsModel newsModel = new NewsModel(newsInfo);
 
-            PrepairEditor("Message", delegate(Editor editor)
-            {
-                //set editor properties here
-            });
-
-
-
             return View(newsModel);
 
         }
 
-         
+
         [HttpPost]
         [Martin]
         public ActionResult Edit(NewsModel news)
@@ -228,5 +174,48 @@ namespace EnterpriseWebSite.Controllers
             return RedirectToAction("Index", "News");
 
         }
+
+        public JsonResult CreateComments(int newsId, int parentId, string comment)
+        {
+            int userId = -1;
+            if (Session["UserId"] != null)
+            {
+                userId = int.Parse(Session["UserID"].ToString());
+            }
+            string userName = "";
+            if (Session["UserName"] != null)
+            {
+                userName = Session["UserName"].ToString();
+            }
+
+            BLLComments bllCom = new BLLComments();
+
+
+            CommentsInfo commentsInfo = new CommentsInfo
+            {
+                CommentDate=DateTime.Now,
+                Comment=comment,
+                ParentCommentID=parentId,
+                Ip=Request.UserHostAddress,
+                PostID=newsId,
+                UserName=userName,
+                UserId=userId
+            };
+            //添加评论
+            bllCom.Insert(commentsInfo);
+
+            //查询评论
+            var CommentList=bllCom.GetDataByPostID(newsId);
+
+            return Json(new { data = CommentList }, JsonRequestBehavior.DenyGet);
+        }
+
+        public JsonResult GetComments(int id)
+        {
+            BLLComments Bll = new BLLComments();
+            var CommList = Bll.GetDataByPostID(id);
+            return Json(new { data = CommList }, JsonRequestBehavior.DenyGet);
+        }
+
     }
 }

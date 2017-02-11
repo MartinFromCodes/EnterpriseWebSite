@@ -43,15 +43,15 @@ namespace EnterpriseWebSite.Controllers
 			string validateCode = Session["code"] == null ? string.Empty : Session["code"].ToString();
 			if (string.IsNullOrEmpty(validateCode))
 			{
-				return Content("no:验证码输入错误");
 				
+                return Content("验证码不能为空");
 			}
 			Session["code"] = null;
 			
 			string txtCode = Request["verifycode"].ToString();
 			if (!validateCode.Equals(txtCode, StringComparison.InvariantCultureIgnoreCase))
 			{
-				return Content("验证码不能为空");
+                return Content("no:验证码输入错误");
 			}
 			 
 

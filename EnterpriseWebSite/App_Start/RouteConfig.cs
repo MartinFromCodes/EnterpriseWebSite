@@ -13,19 +13,26 @@ namespace EnterpriseWebSite
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            //新闻的路由规则 News/index.html
             routes.MapRoute(
-                name: "NewRoute",
-                url: "{controller}/{action}/{id}.html"
-                 
-            );
+                       name: "Default",
+                       url: "{controller}/{action}/{id}",
+                       defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
 
-            routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-				
-            );
+                   );
+            //新闻的路由规则 News/index.html
+            //routes.MapRoute(
+            //    name: "NewRoute",
+            //    url: "{controller}/{action}/{id}.html"
+
+            //);
+
+
+            //routes.MapRoute(
+            //   name: "NewRoute",
+            //   url: "{controller}/{action}/{id}.html}",
+            //   defaults: new { controller = "News", action = "Index", id = UrlParameter.Optional },
+            //   constraints: new { id = @"\d+" });
+
         }
     }
 }

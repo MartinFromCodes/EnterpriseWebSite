@@ -4,19 +4,20 @@
     ViewBag.Title = "新闻列表";
 
 }
-<div id="index_main" class="newlist">
+<div id="index_main" class="newlist liheigit">
     <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
     <h3>新闻列表</h3>
     <hr />
-    <p>&nbsp;&nbsp;&nbsp;&nbsp;@Html.ActionLink("添加新闻信息", "Create", "News", new { style="font-size: 18px;color: red;" }) </p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;@Html.ActionLink("添加新闻信息", "Create", new { controller ="News"}, new { style = "font-size: 18px;color: red;" }) </p>
+ 
+    @if (Session["UserName"] != null)
+    {
     <table class="news-tab">
-        
-
         @foreach (EnterpriseWebSite.Models.NewsModel item in Model)
         {
             <tr>
                 <td>
-                    @Html.ActionLink(@item.Title, "Details", new { id = item.NewId })  
+                    @Html.ActionLink(@item.Title, "Details", new { id = item.NewId })
                 </td>
                 <td>
                     @Html.ActionLink("编辑", "Edit", new { id = item.NewId }) |
@@ -26,9 +27,19 @@
                 </td>
             </tr>
         }
-
     </table>
+    }
+    else
+    {
+        <ol>
+            @foreach (EnterpriseWebSite.Models.NewsModel item in Model)
+            {
+                <li style="list-style:decimal;margin-left:20px;">@Html.ActionLink(@item.Title, "Details", new { id = item.NewId })</li>
+            }
+        </ol>
+    }
 
+ 
     <div id="dialog" title="删除新闻" hidden="hidden">
         <p>你是否确定要删除这条新闻?</p>
     </div>

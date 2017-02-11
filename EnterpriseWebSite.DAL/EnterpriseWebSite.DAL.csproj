@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DALBase.cs" />
+    <Compile Include="DALComments.cs" />
     <Compile Include="DALNews.cs" />
     <Compile Include="DALUsers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

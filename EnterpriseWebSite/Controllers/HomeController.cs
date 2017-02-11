@@ -9,7 +9,7 @@ namespace EnterpriseWebSite.Controllers
 {
     public class HomeController : Controller
     {
-        MusicDataContext MusicDB = new MusicDataContext();
+        EnteDataContext enteDb = new EnteDataContext();
 
         public ActionResult Index()
         {

@@ -4,64 +4,185 @@
     ViewBag.Title = "新闻详细内容";
 }
 
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-
-<!-- Optional theme -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
-<script src="~/js/jquery-1.9.1.js"></script>
-<!-- Latest compiled and minified JavaScript -->
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
 
+<div class="newlist">
 
-<h2>新闻详细信息</h2>
+    <h2>新闻详细信息</h2>
 
-<fieldset>
-    <legend> </legend>
+    <fieldset>
+        <legend> </legend>
 
-     
-   
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Title)
+
+
+        <div class="display-label">
+            @Html.DisplayNameFor(model => model.Title)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.Title)
+        </div>
+
+        <div class="display-label">
+            @Html.DisplayNameFor(model => model.Message)
+        </div>
+        <div class="display-field">
+            @Html.Raw(@Model.Message)
+        </div>
+
+        <div class="display-label">
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </div>
+        <div class="display-field">
+            @Html.DisplayFor(model => model.CreateDate)
+        </div>
+
+
+
+
+
+
+    </fieldset>
+
+    <p>
+        @if (Session["UserName"] != null)
+        {
+            @Html.ActionLink("编辑", "Edit",  new { id = Model.NewId })
+            <text>|</text>
+        }
+
+        @Html.ActionLink("返回新闻列表", "Index", "News")
+    </p>
+    <h2>最新评论</h2>
+    <div class="pl-list" id="commentsList">
+
     </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Title)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.Message)
-    </div>
-    <div class="display-field">
-        @Html.Raw(@Model.Message)
-    </div>
- 
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.CreateDate)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.CreateDate)
-    </div>
-
-    <div class="display-label">
-         @Html.DisplayNameFor(model => model.ViewTimes)
-    </div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.ViewTimes)
-    </div>
-
-    
-
-    
-     
-</fieldset>
-
-<p>
-    @if (Session["UserName"]!=null)
+    <input id="newsId" type="hidden" value="@Model.NewId" />
+    <input id="parentId" type="hidden" value="0" />
+    <input id="rootURL" type="hidden" value="@ViewBag.RootURL" />
+    @if (Session["UserName"] != null)
     {
-          @Html.ActionLink("编辑", "Edit","News", new { id=Model.NewId }) 
-        <text>|</text>
+        <div>
+            <textarea id="comments" class="form-control" rows="10" cols="135"></textarea>
+
+            <br /><br />
+            <p style="text-align: right;">
+                <input type="button" id="btnSaveComment" class="btn btn-default" value="提交" style="width: 100px;" />
+            </p>
+        </div>
     }
-  
-    @Html.ActionLink("返回新闻列表", "Index","News")
-</p>
+    else
+    {
+        <div class="form-control" style="text-align: center;">
+            你需要登录后才可以评论 @Html.ActionLink("登陆", "Login", "Account") | @Html.ActionLink("注册", "Register", "Account")
+        </div>
+    }
+    <div style="text-align: center;">
+        <ul class="pagination">
+            <li><a href="#">&laquo;</a></li>
+            <li><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#">...</a></li>
+            <li><a href="#">26</a></li>
+            <li><a href="#">&raquo;</a></li>
+        </ul>
+    </div>
+    <table>
+        <tr></tr>
+    </table>
+    <script src="~/Scripts/Comm.js"></script>
+    <script>
+        //1获取评论
+        function GetComment() {
+            var url = $("#rootURL").val() + "/News/GetComments/" + $("#newsId").val();
+            try {
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function (json) {
+                        ShowResult(json);
+                    },
+                    error: function (json) { alert("失败!"); }
+                });
+            } catch (e) {
+                alert(e);
+            }
+           
+
+        }
+
+        function ShowResult(json) {
+            var resultHTML = '<table class="table table-bordered">';
+
+            //for (var i in json.data) {
+            //    var item = json.data[i];
+            //    resultHTML += '<tr class="success"><td colspan="2" >' + item.Comment + '</td></tr> ';
+            //    resultHTML += '<tr class="info" >';
+            //    resultHTML += '<td>评论时间：' + new Date(parseInt(item.CommentDate.toLowerCase().replace('/date(', '').replace(')', ''))).Format("yyyy-MM-dd hh:mm:ss") + '</td>';
+
+            //    resultHTML += '<td>评论人：' + item.UserName + '</td></tr>';
+            //}
+            $.each(json.data, function myfunction(i,item) {
+                resultHTML += '<tr class="success" ><td colspan=\'2\' >' + item.Comment + '</td></tr> ';
+                resultHTML += '<tr class="info" >';
+                resultHTML += '<td>评论时间：'+ new Date(parseInt(item.CommentDate.toLowerCase().replace('/date(', '').replace(')', ''))).Format("yyyy-MM-dd hh:mm:ss") + '</td>';
+                
+                resultHTML += '<td  >评论人：' + item.UserName +'</td></tr>';
+            })
+            resultHTML += '</table>';
+
+            //清空评论
+            $("#commentsList").html("");
+
+            //显示评论
+            $("#commentsList").html(resultHTML);
+           
+        }
+
+        $(document).ready(function () {
+            GetComment();
+
+            //点击保存评论
+            document.getElementById("btnSaveComment").onclick = function () {
+                
+                var nid = $("#newsId").val();
+                var pid = $("#parentId").val();
+                var content = $("#comments").val().trim();
+                if (content == "") {
+                    $("#btnSaveComment").removeAttr("disabled");
+                    alert("请输入评论内容!");
+                    $("#comments").focus();
+                    return;
+                } else {
+                    $("#btnSaveComment").attr("disbled", true);
+                }
+
+                var PostData = {
+                    newsId: nid,
+                    parentId: pid,
+                    comment: content
+                };
+
+                $.ajax({
+                    url: $("#rootURL").val() + "/News/CreateComments",
+                    type: "post",
+                    data: PostData,
+                    dataType: "json",
+                    success: function (json) {
+                        alert("评论成功!");
+                        $("#comments").val("");
+                        ShowResult(json);
+                    },
+                    error: function (json) {
+                        alert("评论失败!");
+                    }
+                })
+            }
+
+        })
+        
+    </script>
+</div>

@@ -7,7 +7,7 @@ namespace EnterpriseWebSite.Entities
 {
     public class NewsInfo
     {
-
+        public NewsInfo() { }
 
         // Properties
         public string Content { get; set; }
@@ -21,11 +21,7 @@ namespace EnterpriseWebSite.Entities
         public string Title { get; set; }
         public int UserId { get; set; }
         public int ViewTimes { get; set; }
-
-        public NewsInfo()
-        { 
-        
-        }
+ 
         //construction Method 
         public NewsInfo(int _NewId, string _Title, string _Content, int _UserId, bool _IsTop, bool _IsCommented, bool _IsPublic, bool _IsDelete, DateTime _CreateDate, int _ViewTimes, string _ImageUrl)
         {
